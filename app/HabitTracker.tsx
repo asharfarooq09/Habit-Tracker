@@ -1375,23 +1375,29 @@ export default function HabitTracker() {
             >
               <h2 className="text-xl font-bold mb-4">Categories</h2>
               <div className="space-y-4">
-                {categories.map((category) => (
-                  <div
-                    key={category.id}
-                    className="flex items-center justify-between p-4 border rounded-lg dark:border-gray-700"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <span>{category.icon}</span>
-                      <span>{category.name}</span>
-                    </div>
-                    <button
-                      onClick={() => deleteCategory(category.id)}
-                      className="text-red-500 hover:text-red-700"
+                {categories.map((category) => {
+                  const Icon = category.icon; // Extract the component type
+                  return (
+                    <div
+                      key={category.id}
+                      className="flex items-center justify-between p-4 border rounded-lg dark:border-gray-700"
                     >
-                      🗑️
-                    </button>
-                  </div>
-                ))}
+                      <div className="flex items-center space-x-2">
+                        <span>
+                          <Icon className="w-5 h-5 text-gray-700 dark:text-white" />
+                        </span>
+                        <span>{category.name}</span>
+                      </div>
+                      <button
+                        onClick={() => deleteCategory(category.id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  );
+                })}
+
                 <div className="space-y-4">
                   <input
                     type="text"
@@ -1412,7 +1418,7 @@ export default function HabitTracker() {
                   />
                   <input
                     type="text"
-                    placeholder="Icon"
+                    placeholder="Icon (component name or JSX)"
                     value={newCategory.icon}
                     onChange={(e) =>
                       setNewCategory({ ...newCategory, icon: e.target.value })
@@ -1426,6 +1432,7 @@ export default function HabitTracker() {
                     Add Category
                   </button>
                 </div>
+
                 <button
                   onClick={() => setShowCategories(false)}
                   className="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600"
